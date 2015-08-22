@@ -1,0 +1,331 @@
+<!-- Leaf starts here -->
+
+<TMPL_IF more>
+
+    <!-- see more comment -->
+    <div
+        class="
+            b-leaf
+            b-leaf-seemore
+            <TMPL_IF moreclass>
+                b-leaf-seemore-<TMPL_VAR moreclass>
+            </TMPL_IF>
+            "
+        data-parent="<TMPL_VAR parent>"
+        data-dtalkids="<TMPL_VAR data>"
+        data-updated-ts="<TMPL_VAR touched>"
+        data-count="<TMPL_VAR more>"
+        >
+
+        <div class="b-leaf-inner">
+
+            <TMPL_LOOP actions>
+
+                <span class="b-leaf-seemore-more">
+                    <a
+                        href="<TMPL_IF href><TMPL_VAR href><TMPL_ELSE>#</TMPL_IF>"
+                        rel="nofollow"
+                        class="b-pseudo"
+                        ><TMPL_VAR title></a>
+                </span>
+
+                <TMPL_IF is_remote_sup>
+                    <TMPL_IF ljusers>
+                        <span class="b-leaf-seemore-from"><TMPL_VAR expr="ml('talk.from')"></span>
+                        <span class="b-leaf-seemore-users"><!--
+                            No spaces in this span plz
+                         --><TMPL_LOOP ljusers><!--
+                             --><TMPL_UNLESS anonymous><!--
+                                 --><TMPL_IF legacy><TMPL_VAR ljuser><!--
+                                 --><TMPL_ELSE><TMPL_INCLUDE name="../User/Display.tmpl"></TMPL_IF><!--
+                             --><TMPL_ELSE><!--
+                                 --><TMPL_VAR expr="ml('talk.anonuser')"><!--
+                             --></TMPL_IF><!--
+                             --><TMPL_UNLESS __last__>,&nbsp;</TMPL_UNLESS><!--
+                         --></TMPL_LOOP><!--
+                         --><TMPL_IF moreusers>&hellip;</TMPL_IF><!--
+                     --></span>
+                    </TMPL_IF>
+                </TMPL_IF>
+
+                <span class="b-leaf-seemore-expand">
+                    <a
+                        href="<TMPL_IF href><TMPL_VAR href><TMPL_ELSE>#</TMPL_IF>"
+                        rel="nofollow"
+                        class="b-pseudo"
+                        ><TMPL_VAR expr="ml('talk.expandlink')"></a>
+                </span>
+
+            </TMPL_LOOP>
+
+        </div><!-- /inner -->
+
+   </div><!-- /leaf-seemore -->
+
+<TMPL_ELSE>
+
+    <TMPL_IF expr="deleted || !shown">
+
+        <!-- clipped comment -->
+        <div
+            class="
+                b-leaf
+                b-leaf-clipped
+                b-leaf-<TMPL_VAR leafclass>
+                "
+            <TMPL_UNLESS noid>
+            id="t<TMPL_VAR dtalkid>"
+            </TMPL_IF>
+            >
+
+            <div class="b-leaf-inner">
+
+                <div class="b-leaf-cheader">
+
+                    <p class="b-leaf-status"><TMPL_INCLUDE name="LeafClass.tmpl"></p>
+
+                    <TMPL_IF controls>
+                        <TMPL_INCLUDE NAME='LeafControls.tmpl'>
+                    </TMPL_IF>
+
+                    <TMPL_IF actions>
+                        <ul class="b-leaf-actions">
+                        <TMPL_LOOP actions>
+                            <TMPL_UNLESS footer>
+                                <TMPL_INCLUDE NAME='LeafActions.tmpl'>
+                            </TMPL_UNLESS>
+                        </TMPL_LOOP>
+                        </ul>
+                    </TMPL_IF>
+
+                </div><!-- /cheader -->
+
+                <div class="b-leaf-footer">
+
+                    <TMPL_IF actions>
+                        <ul class="b-leaf-actions">
+                        <TMPL_LOOP actions>
+                            <TMPL_IF footer>
+                                <TMPL_INCLUDE NAME='LeafActions.tmpl'>
+                            </TMPL_IF>
+                        </TMPL_LOOP>
+                        </ul>
+                    </TMPL_IF>
+
+                </div><!-- /footer -->
+
+            </div><!-- /inner -->
+
+        </div><!-- /leaf-clipped -->
+
+    <TMPL_ELSE>
+
+        <!-- normal comment -->
+        <div
+            <TMPL_UNLESS noid>
+            id="t<TMPL_VAR dtalkid>"
+            </TMPL_IF>
+            class="
+                b-leaf
+                <TMPL_IF leafclass>
+                    b-leaf-<TMPL_VAR leafclass>
+                </TMPL_IF>
+                <TMPL_IF suspended>
+                    b-leaf-suspended
+                </TMPL_IF>
+                <TMPL_IF tracked>
+                    b-leaf-tracked
+                </TMPL_IF>
+                <TMPL_IF subclass>
+                    b-leaf-<TMPL_VAR subclass>
+                </TMPL_IF>
+                <TMPL_IF p_tracked>
+                    b-leaf-tracked-parent
+                </TMPL_IF>
+                <TMPL_IF modereply>
+                    b-leaf-modereply
+                </TMPL_IF>
+                <TMPL_IF EXPR="uname eq poster">
+                    b-leaf-poster
+                </TMPL_IF>
+                <TMPL_IF subject>
+                    b-leaf-withsubject
+                </TMPL_IF>
+                <TMPL_IF is_best>
+                    b-leaf-best
+                </TMPL_IF>
+                <TMPL_IF is_promo>
+                    b-leaf-promo
+                </TMPL_IF>
+                comment
+                p-comment
+                "
+            data-username="<TMPL_VAR uname>"
+            data-displayname="<TMPL_VAR dname>"
+            data-updated-ts="<TMPL_VAR ctime_ts>"
+            <TMPL_IF loaded>
+                data-full="1"
+            </TMPL_IF>
+            <TMPL_IF subject>
+                data-subject="<TMPL_VAR subject>"
+            </TMPL_IF>
+            >
+
+            <!-- inner -->
+            <div class="b-leaf-inner">
+
+                <!-- header -->
+                <div class="b-leaf-header">
+
+                    <!-- userpic -->
+                    <div class="b-leaf-userpic">
+                        <span class="b-leaf-userpic-inner">
+                            <TMPL_IF userpic>
+                                <img
+                                    src="<TMPL_VAR userpic>"
+                                    alt=""
+                                    <TMPL_IF upictitle>
+                                        title="<TMPL_VAR upictitle>"
+                                    </TMPL_IF>
+                                    >
+                            <TMPL_ELSE>
+                                <img
+                                    src="<TMPL_VAR statprefix><TMPL_IF username>/img/userpics/userpic-user.png?v=15821<TMPL_ELSE>/img/userpics/userpic-anonymous.png?v=15821</TMPL_IF>"
+                                    alt=""
+                                    >
+                            </TMPL_IF>
+                        </span>
+                    </div><!-- /userpic -->
+
+                    <!-- details -->
+                    <div class="b-leaf-details">
+
+                        <TMPL_IF shown>
+
+                            <TMPL_IF subject>
+                                <h4 class="b-leaf-subject"><!--
+                                    --><a
+                                        href="<TMPL_VAR thread_url>"
+                                        class="b-leaf-subject-link"
+                                        ><!--
+                                        --><TMPL_VAR subject><!--
+                                    --></a><!--
+                                --></h4>
+                            </TMPL_IF>
+
+                            <p class="b-leaf-username"><!--
+                                --><TMPL_IF is_best><!--
+                                    --><span
+                                        class="
+                                            b-leaf-badge
+                                            b-leaf-badge-best
+                                            "
+                                        ><TMPL_VAR expr="ml('talk.comment.best')"></span><!--
+                                --></TMPL_IF><!--
+                                --><TMPL_IF is_promo><!--
+                                    --><span
+                                        class="
+                                            b-leaf-badge
+                                            b-leaf-badge-promo
+                                            "
+                                        ><TMPL_VAR expr="ml('talk.comment.promo')"></span><!--
+                                --></TMPL_IF><!--
+                                --><span class="b-leaf-username-name"><!--
+                                    No spaces in this span plz
+                                 --><TMPL_IF username><!--
+                                     --><TMPL_IF deleted_poster><!--
+                                        --><TMPL_VAR deleted_poster><!--
+                                     --><TMPL_ELSE><!--
+                                            Loop here to create namespace, actually there will be only one user at once
+                                         --><TMPL_LOOP username><!--
+                                             In old code we only insert html markup
+                                             --><TMPL_IF legacy><TMPL_VAR ljuser><!--
+                                             --><TMPL_ELSE><TMPL_INCLUDE name="../User/Display.tmpl"><!--
+                                             --></TMPL_IF><!--
+                                         --></TMPL_LOOP><!--
+                                     --></TMPL_IF><!--
+                                 --><TMPL_ELSE><!--
+                                     --><TMPL_VAR expr="ml('talk.anonuser')"><!--
+                                 --></TMPL_IF><!--
+                             --></span>
+                                <TMPL_IF ipaddr>
+                                    <span class="b-leaf-ipaddr"><TMPL_VAR ipaddr></span>
+                                </TMPL_IF>
+                            </p>
+
+                            <p class="b-leaf-meta">
+                                <TMPL_IF ctime>
+                                    <a
+                                        href="<TMPL_VAR thread_url>"
+                                        class="b-leaf-permalink"
+                                        >
+                                        <span class="b-leaf-createdtime"><TMPL_VAR ctime></span>
+                                    </a>
+                                </TMPL_IF>
+                                <TMPL_IF stime>
+                                    <span class="b-leaf-shorttime"><TMPL_VAR stime></span>
+                                </TMPL_IF>
+                                <TMPL_IF etime>
+                                    <span class="b-leaf-editedtime"><TMPL_VAR expr="ml('talk.edited')">&nbsp;<TMPL_VAR etime></span>
+                                </TMPL_IF>
+                            </p>
+
+                            <TMPL_IF actions>
+                                <ul class="b-leaf-actions">
+                                    <TMPL_LOOP actions>
+                                        <TMPL_UNLESS footer>
+                                            <TMPL_INCLUDE NAME='LeafActions.tmpl'>
+                                        </TMPL_UNLESS>
+                                    </TMPL_LOOP>
+                                    <li class="b-leaf-actions-item b-leaf-actions-new"><!--
+                                        --><span class="b-thisisnew"><!--
+                                            --><TMPL_VAR expr="ml('talk.new')"><!--
+                                        --></span><!--
+                                    --></li>
+                                </ul>
+                            </TMPL_IF>
+
+                        </TMPL_IF>
+
+                        <TMPL_IF loaded>
+                            <TMPL_IF controls>
+                                <TMPL_INCLUDE NAME='LeafControls.tmpl'>
+                            </TMPL_IF>
+                        </TMPL_IF>
+
+                    </div><!-- /details -->
+
+                </div><!-- /header -->
+
+                <!-- article and subject -->
+                <TMPL_IF article>
+                    <div class="b-leaf-article">
+                        <TMPL_VAR article>
+                    </div>
+                </TMPL_IF><!-- /article -->
+
+                <!-- footer -->
+                <div class="b-leaf-footer">
+                    <TMPL_IF actions>
+                        <ul class="b-leaf-actions">
+                            <TMPL_LOOP actions>
+                                <TMPL_IF footer>
+                                    <TMPL_INCLUDE NAME='LeafActions.tmpl'>
+                                </TMPL_IF>
+                            </TMPL_LOOP>
+                            <li class="b-leaf-actions-item b-leaf-actions-new">
+                                <span class="b-thisisnew"><TMPL_VAR expr="ml('talk.new')"></span>
+                            </li>
+                        </ul>
+                    </TMPL_IF>
+                </div><!-- /footer -->
+
+            </div><!-- /inner -->
+
+        </div><!-- /leaf -->
+
+    </TMPL_IF>
+
+</TMPL_IF>
+
+

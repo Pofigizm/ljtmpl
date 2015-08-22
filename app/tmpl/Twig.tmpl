@@ -1,0 +1,16 @@
+<div
+    class="
+        b-tree-twig
+        <TMPL_IF level>
+            b-tree-twig-<TMPL_VAR level>
+        </TMPL_IF>
+        "
+    style="margin-left: <TMPL_VAR margin>px"
+    data-tid="t<TMPL_VAR dtalkid>"
+    >
+    <TMPL_IF html>
+        <TMPL_VAR html>
+    <TMPL_ELSE>
+        <TMPL_INCLUDE NAME="Leaf.tmpl">
+    </TMPL_IF>
+</div>
